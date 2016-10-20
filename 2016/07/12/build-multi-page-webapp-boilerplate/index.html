@@ -71,7 +71,7 @@
 什么是multi-page 网页应用我认为multi-page 网页应用就是：网页是多个页面（HTML）组成的，页面之间的切换是通过超链接完成的。
 这通常也是最传统的开发模式。
 随着移动互联网">
-<meta property="og:updated_time" content="2016-10-20T14:55:13.000Z">
+<meta property="og:updated_time" content="2016-10-20T15:06:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何构建多网页应用">
 <meta name="twitter:description" content="多网页应用，一直以来都是比较常见的，但如何更高效的开发，自动的构建多页应用？以下是我在网页开发中的最佳实践。github演示源代码：build-multi-page-webapp-boilerplate
@@ -329,17 +329,16 @@
 <h2 id="分离出每个页面的style，script"><a href="#分离出每个页面的style，script" class="headerlink" title="分离出每个页面的style，script"></a>分离出每个页面的style，script</h2><p>我们将每个页面的style，script分离到单独的文件中，然后用Gulp来集中管理。</p>
 <h2 id="利用Gulp构建整个项目"><a href="#利用Gulp构建整个项目" class="headerlink" title="利用Gulp构建整个项目"></a>利用Gulp构建整个项目</h2><p>说到项目构建，从最初的<a href="http://www.gruntjs.net/" target="_blank" rel="external"><code>grunt</code></a>，<a href="http://gulpjs.com/" target="_blank" rel="external"><code>gulp</code></a>到现在更流行的<a href="https://webpack.github.io/" target="_blank" rel="external"><code>webpack</code></a>，都是为了更好将组织前端代码，提高生产力。运用<code>gulp</code>我们可以将<strong>每一个页面</strong>都当成一个Task，到时我们只需要运行脚本执行每一个Task，就完成了整个项目的构建。<br>说白了，每个页面可能含有多个css，js文件，我们可以提取出css，js文件，用gulp分别对其进行合并，压缩，注入。</p>
 <ol>
-<li>合并    </li>
+<li><p>合并</p>
+<p> 假设一个页面，含有N个js文件，N个css文件，我们先将这N个js， N个CSS按顺序合并.</p>
+</li>
+<li><p>压缩</p>
+<p> 我们将上一步合并的文件，进行ugly压缩，去除注释，空格，替换变量等。</p>
+</li>
+<li><p>注入</p>
+<p> 也就是注入到HTML，我们将上一步压缩过的代码，重命名（加hash后缀），然后通过inject工具<a href="https://github.com/klei/gulp-inject" target="_blank" rel="external"><code>gulp-inject</code></a>，注入到HTML中（代码不是通过script，或link引入的，而是inject注入进去的）。</p>
+</li>
 </ol>
-<p>假设一个页面，含有N个js文件，N个css文件，我们先将这N个js， N个CSS按顺序合并</p>
-<ol>
-<li>压缩</li>
-</ol>
-<p>我们将上一步合并的文件，进行ugly压缩，去除注释，空格，替换变量等。</p>
-<ol>
-<li>注入</li>
-</ol>
-<p>也就是注入到HTML，我们将上一步压缩过的代码，重命名（加hash后缀），然后通过inject工具<a href="https://github.com/klei/gulp-inject" target="_blank" rel="external"><code>gulp-inject</code></a>，注入到HTML中（代码不是通过script，或link引入的，而是inject注入进去的）。</p>
 <h2 id="预编译CSS"><a href="#预编译CSS" class="headerlink" title="预编译CSS"></a>预编译CSS</h2><p>既然用了Gulp来构建整个项目，严重推荐使用预编译语言<a href="http://stylus-lang.com/" target="_blank" rel="external"><code>stylus</code></a>,  <a href="http://sass-lang.com/" target="_blank" rel="external"><code>scss</code></a>,  <a href="http://lesscss.org/" target="_blank" rel="external"><code>less</code></a> 来编写样式，最后集成到gulp项目里。因为css语言特性太不智能，例如不支持变量、嵌套，继承, mixin…，当项目大时候，对整个项目的开发是一种拖累。</p>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>本文只是提供了一种思路，具体请查看github演示源代码：<a href="https://github.com/fedorjia/build-multi-page-webapp-boilerplate" target="_blank" rel="external">build-multi-page-webapp-boilerplate</a></p>
 
